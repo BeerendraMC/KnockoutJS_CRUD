@@ -1,0 +1,28 @@
+{
+  "Products": [
+    {
+      "id": 1,
+      "Name": "Honor 10 Lite",
+      "Category": "smartphone",
+      "Price": 14000
+    },
+    {
+      "id": 2,
+      "Name": "Royal Enfield Classic 350",
+      "Category": "motorcycle",
+      "Price": 160000
+    },
+    {
+      "id": 3,
+      "Name": "Realme 10X",
+      "Category": "smartphone",
+      "Price": 14000
+    },
+    {
+      "id": 4,
+      "Name": "sample44dsfgdf",
+      "Price": 52,
+      "Category": "fghfgdfgdsfrg"
+    }
+  ]
+}
