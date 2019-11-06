@@ -15,41 +15,8 @@
 
       <h3>List of Products</h3>
 
-      <table id="products1" data-bind="visible: Products().length > 0">
-         <thead>
-            <tr>
-               <th>ID</th>
-               <th>Name</th>
-               <th>Category</th>
-               <th>Price</th>
-               <th>Actions</th>
-            </tr>
-         </thead>
-         <tbody data-bind="foreach: Products">
-            <tr>
-               <td data-bind="text: id"></td>
-               <td data-bind="text: Name"></td>
-               <td data-bind="text: Category"></td>
-               <td data-bind="text: formatCurrency(Price)"></td>
+      <div data-bind="component:{name:'table-component', params: {columns: cols, rows: Products}}"></div>
 
-               <td>
-                  <button data-bind="click: $parent.edit">Edit</button>
-                  <button data-bind="click: $parent.delete">Delete</button>
-
-               </td>
-
-            </tr>
-         </tbody>
-         <tfoot>
-            <tr>
-               <td></td>
-               <td></td>
-               <td>Total :</td>
-               <td data-bind="text: formatCurrency($root.Total())"></td>
-               <td></td>
-            </tr>
-         </tfoot>
-      </table>
       <br />
       <div style="border-top: solid 2px #282828; width: 430px; height: 10px"> </div>
 
@@ -107,12 +74,47 @@
          <div>
             <button data-bind="click: $root.create">Save</button>
             <button data-bind="click: $root.reset">Reset</button>
-
          </div>
       </div>
 
+      <canvas id="c" width="300" height="300"></canvas>
+
    </div>
 
+   <template id='tableComponentTemplate'>
+      <table id="products1" data-bind="visible: rows().length > 0">
+         <thead>
+            <tr data-bind="foreach: columns">
+               <th data-bind="text: name"></th>
+            </tr>
+         </thead>
+         <tbody data-bind="foreach: {data: rows, as: 'row'}">
+            <tr>
+               <!-- ko foreach: {data: $parent.columns, as: 'col'} -->
+               <!-- ko ifnot: col.field == 'Price' -->
+               <td data-bind="text: row[col.field]"></td>
+               <!-- /ko -->
+               <!-- ko if: col.field == 'Price' -->
+               <td data-bind="text: formatCurrency(row[col.field])"></td>
+               <!-- /ko -->
+               <!-- /ko -->
+               <td>
+                  <button data-bind="click: $root.edit">Edit</button>
+                  <button data-bind="click: $root.delete">Delete</button>
+               </td>
+            </tr>
+         </tbody>
+         <tfoot>
+            <tr>
+               <td></td>
+               <td></td>
+               <td>Total :</td>
+               <td data-bind="text: formatCurrency($root.Total())"></td>
+               <td></td>
+            </tr>
+         </tfoot>
+      </table>
+   </template>
 
 </body>
 

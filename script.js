@@ -1,3 +1,10 @@
+$(document).ready(function () {
+    var canvas = document.getElementById("c");
+    var drawing_context = canvas.getContext("2d");
+    drawing_context.fillStyle = "blue";
+    drawing_context.fillRect(50, 50, 100, 100);
+});
+
 function formatCurrency(value) {
     return "$ " + value;
 }
@@ -25,6 +32,12 @@ function ProductViewModel(prd) {
 
     self.Product = ko.observable();
     self.Products = ko.observableArray(); // Contains the list of products
+    self.cols = [
+        { name: 'Id', field: 'id'},
+        { name: 'Name', field: 'Name'},
+        { name: 'Category', field: 'Category'},
+        { name: 'Price', field: 'Price'}
+    ];
 
     // Initialize the view-model
     $.ajax({
@@ -135,10 +148,22 @@ function ProductViewModel(prd) {
     self.cancel = function () {
         self.Product(null);
     }
+
 }
+
+function TableComponentViewModel(params) {
+    this.columns = params.columns; // Array[{name:string;field:string}]
+    this.rows = params.rows;
+}
+
+ko.components.register('table-component', {
+    viewModel: TableComponentViewModel,
+    template: { element: 'tableComponentTemplate' }
+})
 
 var prd = new ProductModel(null, "", "", "");
 var viewModel = new ProductViewModel(prd);
-window.onload = function () {
+
+$(document).ready(function () {
     ko.applyBindings(viewModel);
-}
+});
